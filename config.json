@@ -1,0 +1,17 @@
+{
+  "feedback_enabled": true,
+  "FPA_lateral_threshold": 5,
+  "FPA_medial_threshold": -5,
+  "Is_right_foot": false,
+  "PushOrPull": "pull",
+  "last_connect_feedback": [
+    "88:6B:0F:4F:A0:BD",
+    "18:04:ED:EB:21:A1"
+  ],
+  "last_connect_sensors": [
+    "18:04:ED:7E:8B:D5"
+  ],
+  "local_time": "2024-05-14-15-47-34",
+  "save_mode": "csv",
+  "trial_name": "trial_name_10"
+}

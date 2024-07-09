@@ -1,0 +1,122 @@
+{
+  "user_guide_file": "Walking Foot Progression Angle App Guide.pdf",
+  "app_name": "Walking Foot Progression Angle",
+  "app_description": "Measure and train foot progression angle during walking <br><br>Nodes Required: 3 <br> -Sensing (1): foot (top, switch pointing forward) <br> -Feedback (2): foot_medial, foot_lateral <br><br><br> This algorithm is based on the Tan2020 magnetometer-free FPA algorithm [1]. It only uses accelerometer and gyroscope data thus avoiding magnetic disturbance issues. It detects the heading direction based on the max acceleration direction of the foot and could work on either treadmill or overground. Abnormal gait may influence the accuracy. Foot sensor calibration depends on foot sensor installation.<br><h4>Calibration Process:</h4><ol><li>Tape the node onto the foot with the Y-axis aligned with the foot axis and node switch pointing towards the toe.</li><li>Subject stands up straight with foot flat on the ground.</li><li>Click the start button in the web interface and the subject may start walking.</li></ol><br><h4>References:</h4>[1] Tan T, Strout ZA, Xia H, Orban M, Shull PB, “Magnetometer-Free, IMU-Based Foot Progression Angle Estimation for Real-Life Walking Conditions,” IEEE Trans Neural Syst Rehabil Eng, vol. PP 10.1109/TNSRE.2020.3047402. 25 Dec. 2020.",
+  "app_id": "004",
+  "app_version": "1_2",
+  "version_id": "00412",
+  "validated_version_range": [
+    "3.20.1",
+    "4.2.6"
+  ],
+  "parameters_setting": [
+    [
+      "Sensor Setting",
+      {
+        "source": "Is_right_foot",
+        "title": "RIGHT FOOT",
+        "type": "bool",
+        "description": "If foot sensor put on the right foot"
+      }
+    ],
+    [
+      "Feedback Setting",
+      {
+        "source": "feedback_enabled",
+        "title": "FOOT FEEDBACK ON",
+        "type": "bool",
+        "description": "Enable/Disable feedback"
+      },
+      {
+        "source": "PushOrPull",
+        "title": "Push or Pull Feedback?",
+        "type": "combo",
+        "validation": [
+          "push",
+          "pull"
+        ],
+        "description": "Select either the push or pull feedback paradigm"
+      }
+    ],
+    [
+      "Foot Angle",
+      {
+        "source": "FPA_lateral_threshold",
+        "title": "Lateral",
+        "type": "float",
+        "validation": [
+          -90,
+          90
+        ],
+        "description": "Feedback would be given when foot is over the lateral side (FPA larger than the threshold"
+      },
+      {
+        "source": "FPA_medial_threshold",
+        "title": "Medial",
+        "type": "float",
+        "validation": [
+          -90,
+          90
+        ],
+        "description": "Feedback would be given when foot is over the medial side (FPA lower than the threshold"
+      }
+    ],
+    [
+      "Save Options",
+      {
+        "source": "save_mode",
+        "title": "Save Mode",
+        "type": "combo",
+        "validation": [
+          "csv",
+          "h5",
+          "xlsx"
+        ],
+        "description": "Save file in specified format"
+      }
+    ]
+  ],
+  "user_fields": [
+    {
+      "name": "time",
+      "data_type": "float",
+      "size": 1
+    },
+    {
+      "name": "Step_Count",
+      "data_type": "int",
+      "size": 1
+    },
+    {
+      "name": "Gait_Phase",
+      "data_type": "int",
+      "size": 1
+    },
+    {
+      "name": "FPA_This_Step",
+      "data_type": "float",
+      "size": 1
+    },
+    {
+      "name": "FPA_Feedback_Medial",
+      "data_type": "int",
+      "size": 1
+    },
+    {
+      "name": "FPA_Feedback_Lateral",
+      "data_type": "int",
+      "size": 1
+    }
+  ],
+  "sensors": [
+    "foot"
+  ],
+  "feedback": [
+    "foot_medial",
+    "foot_lateral"
+  ],
+  "Is_pull": true,
+  "pulse_length": 0.5,
+  "alpha": 0.8,
+  "datarate": 100
+}
