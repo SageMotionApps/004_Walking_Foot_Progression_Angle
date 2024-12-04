@@ -80,7 +80,7 @@ class FPA:
             )
 
             roll, pitch, yaw = euler_angles_esti[i_sample + 1, :]
-            transfer_mat = np.array(
+            transfer_mat = np.mat(
                 [
                     [1, np.sin(roll) * np.tan(pitch), np.cos(roll) * np.tan(pitch)],
                     [0, np.cos(roll), -np.sin(roll)],
