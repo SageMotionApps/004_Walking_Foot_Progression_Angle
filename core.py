@@ -132,6 +132,22 @@ class Core(BaseApp):
         else:
             self.my_sage.feedback_off(feedbackNode)
 
+    def apply_push_pull_feedback(self, push_node, pull_node):
+        self.toggle_feedback(
+            push_node, duration=self.pulse_length, feedback_state=self.is_push
+        )
+        self.toggle_feedback(
+            pull_node, duration=self.pulse_length, feedback_state=self.is_pull
+        )
+        self.feedback_foot_medial = int(
+            (self.is_push and push_node == self.foot_medial_feedback_nodeNum)
+            or (self.is_pull and pull_node == self.foot_medial_feedback_nodeNum)
+        )
+        self.feedback_foot_lateral = int(
+            (self.is_push and push_node == self.foot_lateral_feedback_nodeNum)
+            or (self.is_pull and pull_node == self.foot_lateral_feedback_nodeNum)
+        )
+
     def give_FPA_feedback(self):
         self.fpa_lateral_feedback_state = int(self.my_FPA.FPA_this_step > self.FPA_lateral_threshold)
         self.fpa_medial_feedback_state = int(
@@ -139,32 +155,16 @@ class Core(BaseApp):
         )
         if self.config["feedback_enabled"]:
             if self.fpa_lateral_feedback_state:
-                self.toggle_feedback(
-                    self.foot_lateral_feedback_nodeNum,
-                    duration=self.pulse_length,
-                    feedback_state=self.is_pull,
+                self.apply_push_pull_feedback(
+                    push_node=self.foot_lateral_feedback_nodeNum,
+                    pull_node=self.foot_medial_feedback_nodeNum,
                 )
-                self.toggle_feedback(
-                    self.foot_medial_feedback_nodeNum,
-                    duration=self.pulse_length,
-                    feedback_state=self.is_push,
-                )
-                self.feedback_foot_medial = int(self.is_pull)
-                self.feedback_foot_lateral = int(self.is_push)
                 return True
             elif self.fpa_medial_feedback_state:
-                self.toggle_feedback(
-                    self.foot_lateral_feedback_nodeNum,
-                    duration=self.pulse_length,
-                    feedback_state=self.is_pull,
+                self.apply_push_pull_feedback(
+                    push_node=self.foot_medial_feedback_nodeNum,
+                    pull_node=self.foot_lateral_feedback_nodeNum,
                 )
-                self.toggle_feedback(
-                    self.foot_medial_feedback_nodeNum,
-                    duration=self.pulse_length,
-                    feedback_state=self.is_push,
-                )
-                self.feedback_foot_lateral = int(self.is_pull)
-                self.feedback_foot_medial = int(self.is_push)
                 return True
 
             self.toggle_all_feedback_off()
